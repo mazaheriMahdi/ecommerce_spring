@@ -2,6 +2,8 @@ package com.ui.ac.shop.ir.shop.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table
 public class ProductProperty {
@@ -10,42 +12,46 @@ public class ProductProperty {
     private Long id;
 
 
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    Product product;
 
     @ManyToOne
     @JoinColumn(name = "propertiesKey_id")
     PropertiesKey propertiesKey;
 
-    private Object value;
-
-
-    public ProductProperty(Long id, PropertiesKey propertiesKey, Object value) {
-        this.id = id;
-        this.propertiesKey = propertiesKey;
-        this.value = value;
-    }
-
-    public ProductProperty(PropertiesKey propertiesKey, Object value) {
-        this.propertiesKey = propertiesKey;
-        this.value = value;
-    }
+    private String value;
 
     public ProductProperty() {
     }
 
-    public Object getValue() {
-        return value;
+    public ProductProperty(Product product, PropertiesKey propertiesKey, String value) {
+        this.product = product;
+        this.propertiesKey = propertiesKey;
+        this.value = value;
     }
 
-    public void setValue(Object value) {
+    public ProductProperty(Long id, Product product, PropertiesKey propertiesKey, String value) {
+        this.id = id;
+        this.product = product;
+        this.propertiesKey = propertiesKey;
         this.value = value;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public PropertiesKey getPropertiesKey() {
@@ -56,4 +62,11 @@ public class ProductProperty {
         this.propertiesKey = propertiesKey;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

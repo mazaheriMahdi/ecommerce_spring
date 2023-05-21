@@ -1,8 +1,10 @@
 package com.ui.ac.shop.ir.shop.Service;
 
+import com.ui.ac.shop.ir.shop.Repository.ProductPropertyRepository;
 import com.ui.ac.shop.ir.shop.Repository.ProductRepository;
 //import com.ui.ac.shop.ir.shop.model.Category;
 import com.ui.ac.shop.ir.shop.model.Product;
+import com.ui.ac.shop.ir.shop.model.ProductProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,16 @@ import java.util.Optional;
 @Service
 public class ProductService {
     private ProductRepository productRepository;
+    private ProductPropertyRepository productPropertyRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, ProductPropertyRepository productPropertyRepository) {
         this.productRepository = productRepository;
+        this.productPropertyRepository = productPropertyRepository;
     }
 
     public List<Product> getProducts() {
-        return productRepository.findAll();
+        return  productRepository.findAll();
     }
 
     public Product getProductById(Long id) throws IllegalAccessException {

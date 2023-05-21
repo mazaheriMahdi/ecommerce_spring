@@ -21,4 +21,8 @@ public class PropertiesKeyService {
     public List<PropertiesKey> getPropertiesKey(){
         return propertiesKeyRepository.findAll();
     }
+
+    public void addPropertiesKey(PropertiesKey propertiesKey){
+        propertiesKeyRepository.save(propertiesKey);
+    }
 }

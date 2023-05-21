@@ -1,8 +1,9 @@
 package com.ui.ac.shop.ir.shop.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ListIndexBase;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -18,9 +19,8 @@ public class Product {
     private double averagePoint;
 
 
-    @OneToMany
-    @JoinColumn(name = "productProperty_id")
-    ArrayList<ProductProperty> productProperties;
+
+
 
 
     @ManyToOne
@@ -41,32 +41,22 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name, int count, int price, double averagePoint, ArrayList<ProductProperty> productProperties, Category category) {
+    public Product(Long id, String name, int count, int price, double averagePoint, Category category) {
         this.id = id;
         this.name = name;
         this.count = count;
         this.price = price;
         this.averagePoint = averagePoint;
 
-        this.productProperties = new ArrayList<>();
         this.category = category;
     }
 
-    public Product(String name, int count, int price, double averagePoint, ArrayList<ProductProperty> productProperties, Category category) {
+    public Product(String name, int count, int price, double averagePoint, Category category) {
         this.name = name;
         this.count = count;
         this.price = price;
         this.averagePoint = averagePoint;
-        this.productProperties = new ArrayList<>();
         this.category = category;
-    }
-
-    public ArrayList<ProductProperty> getProductProperties() {
-        return productProperties;
-    }
-
-    public void setProductProperties(ArrayList<ProductProperty> productProperties) {
-        this.productProperties = productProperties;
     }
 
     public String getName() {
