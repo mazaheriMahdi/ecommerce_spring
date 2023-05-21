@@ -1,67 +1,40 @@
 package com.ui.ac.shop.ir.shop.controller;
 
-import controller.Exeptions.ObjectDoesNotExist;
-import model.Condition.Condition;
-import model.Point.Point;
-import model.Product.BaseProduct;
+import com.ui.ac.shop.ir.shop.Service.ProductService;
+import com.ui.ac.shop.ir.shop.model.Product;
+import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+@RestController
+@RequestMapping("/product")
 public class ProductController {
-    private static final ArrayList<Object> products;
-    private static Object currentProduct;
+    private ProductService productService;
 
-    static {
-        products = new ArrayList<>();
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
-    public static Object getCurrentProduct() {
-        return currentProduct;
-    }
+    @GetMapping(value = {"","/{productId}"})
+    public List<Product> getProduct(@PathVariable @Nullable Long productId) {
+        if (productId!=null){
+            try {
 
-    public static void setCurrentProduct(Object currentProduct) {
-        ProductController.currentProduct = currentProduct;
-    }
-
-    public static ArrayList<Object> getProducts() {
-        return products;
-    }
-
-
-    public static void addProduct(Object object) {
-        products.add(object);
-    }
-
-    public static void removeProduct(Object object) {
-        products.remove(object);
-    }
-
-    public static void changeProperties(Object object, Object newObject) {
-        int index = products.indexOf(object);
-        products.set(index, newObject);
-    }
-
-    public static float getPoint(int id) throws ObjectDoesNotExist {
-        float pointNumber = 0;
-        int number = 0;
-        for (Point point : PointController.getPoints()) {
-
-            if (point.getProductId() == id && point.getCondition().equals(Condition.ACCEPTED)) {
-                number++;
-                pointNumber += point.getPoint();
+            return List.of(productService.getProductById(productId)) ;
+            }catch (IllegalAccessException o){
+                return List.of(null);
             }
         }
-        return pointNumber / number;
+        return productService.getProducts();
     }
 
-    public static Object getProductById(int id) throws ObjectDoesNotExist {
-        for (Object obj : products) {
-            if (((BaseProduct) obj).getId() == id) {
-                return obj;
-            }
-        }
-        throw new ObjectDoesNotExist("product");
+    @PostMapping
+    public void addStudent(@RequestBody Product product){
+        this.productService.addProduct(product);
+
     }
-
-
 }
