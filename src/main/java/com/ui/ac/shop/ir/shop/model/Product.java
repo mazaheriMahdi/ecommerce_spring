@@ -2,6 +2,8 @@ package com.ui.ac.shop.ir.shop.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+
 @Entity
 @Table
 public class Product {
@@ -15,6 +17,12 @@ public class Product {
     private int price;
     private double averagePoint;
 
+
+    @OneToMany
+    @JoinColumn(name = "productProperty_id")
+    ArrayList<ProductProperty> productProperties;
+
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -26,6 +34,9 @@ public class Product {
     public Long getId() {
         return id;
     }
+
+
+
 
     public Product() {
     }
