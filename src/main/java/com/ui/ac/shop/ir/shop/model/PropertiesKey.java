@@ -12,6 +12,7 @@ public class PropertiesKey {
     private Long id;
     private String name;
 
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -20,5 +21,24 @@ public class PropertiesKey {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public PropertiesKey(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public PropertiesKey(String name) {
+        this.name = name;
+    }
+
+    public PropertiesKey() {
+    }
 }

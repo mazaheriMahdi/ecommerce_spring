@@ -23,10 +23,9 @@ public class ProductController {
     public List<Product> getProduct(@PathVariable @Nullable Long productId) {
         if (productId!=null){
             try {
-
             return List.of(productService.getProductById(productId)) ;
             }catch (IllegalAccessException o){
-                return List.of(null);
+                return List.of(new Product());
             }
         }
         return productService.getProducts();
