@@ -1,5 +1,7 @@
 package com.ui.ac.shop.ir.shop.model;
 
+import com.ui.ac.shop.ir.shop.model.ResponseModels.FullProduct;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ListIndexBase;
 
@@ -13,9 +15,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Nullable
+    private String image;
     private String name;
     private int count;
     private int price;
+
+
     private double averagePoint;
 
 
@@ -26,6 +32,15 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -98,6 +113,7 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 
 
     @Override

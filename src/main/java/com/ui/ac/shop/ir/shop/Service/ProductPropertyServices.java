@@ -22,4 +22,8 @@ public class ProductPropertyServices {
     public void addProductProperty(ProductProperty  productProperty){
         productPropertyRepository.save(productProperty);
     }
+
+    public List<ProductProperty> getByProductId(Long id){
+        return productPropertyRepository.findAll();
+    }
 }

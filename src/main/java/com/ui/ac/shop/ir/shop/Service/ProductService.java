@@ -1,5 +1,6 @@
 package com.ui.ac.shop.ir.shop.Service;
 
+import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Repository.ProductPropertyRepository;
 import com.ui.ac.shop.ir.shop.Repository.ProductRepository;
 //import com.ui.ac.shop.ir.shop.model.Category;
@@ -26,13 +27,13 @@ public class ProductService {
         return  productRepository.findAll();
     }
 
-    public Product getProductById(Long id) throws IllegalAccessException {
+    public Product getProductById(Long id) {
         Optional<Product> product = productRepository.findProductById(id);
         if (product.isPresent()){
             return product.get();
         }
         else {
-            throw new IllegalAccessException();
+            throw new EntityNotFoundException("product" , id);
         }
     }
 
