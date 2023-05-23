@@ -1,6 +1,7 @@
 package com.ui.ac.shop.ir.shop.Service;
 
 
+import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
 import com.ui.ac.shop.ir.shop.Exception.TakenEmailException;
 import com.ui.ac.shop.ir.shop.Repository.UserRepository;
@@ -19,6 +20,13 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public User getUserByEmail(String email){
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()){
+            return user.get();
+        }throw new EntityNotFoundException("User","email" , email );
     }
 
     public User getByToken(UUID token){
