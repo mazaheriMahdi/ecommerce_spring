@@ -30,9 +30,10 @@ public class UserService {
     public List<User> getAll(){
         return userRepository.findAll();
     }
-    public void addUser(User user){
+    public User addUser(User user){
         if (userRepository.findByEmail(user.getEmail()).isEmpty()){
             userRepository.save(user);
+            return userRepository.findByEmail(user.getEmail()).get();
         }else {
             throw new TakenEmailException(user.getEmail());
         }

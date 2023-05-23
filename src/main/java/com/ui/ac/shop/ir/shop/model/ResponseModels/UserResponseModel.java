@@ -9,5 +9,5 @@ import java.util.UUID;
 @AllArgsConstructor
 @Value
 public class UserResponseModel {
-    UUID uuid;
+    UUID token;
 }

@@ -2,10 +2,7 @@ package com.ui.ac.shop.ir.shop.model;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.Id;
 
@@ -25,8 +22,8 @@ public class User{
     private Long id;
 
 
-    @UuidGenerator
-    private UUID uuid;
+
+    private UUID uuid = UUID.randomUUID();
 
 
     @Column(nullable=false)
@@ -42,5 +39,9 @@ public class User{
     private Boolean isStaff  = false;
 
 
-
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }
