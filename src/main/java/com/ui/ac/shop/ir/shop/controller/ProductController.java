@@ -9,18 +9,22 @@ import com.ui.ac.shop.ir.shop.model.ResponseModels.FullProduct;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.ProductPropertiesResponse;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController {
     private ProductService productService;
     private ProductPropertyServices productPropertyServices;
+
+
 
 
 
@@ -52,8 +56,9 @@ public class ProductController {
     }
 
     @GetMapping(value = "test")
-    public ResponseEntity<AddProductRequest> getf(){
+    public ResponseEntity<AddProductRequest> getf(@RequestHeader(HttpHeaders.AUTHORIZATION) UUID token){
         AddProductRequest addProductRequest = new AddProductRequest(productService.getProducts().get(0) , List.of(new ProductPropertiesResponse("CAR" , "101")));
+        System.out.println(token);
         return new ResponseEntity<>( addProductRequest , HttpStatus.OK);
     }
 

@@ -28,6 +28,7 @@ public class User{
     @UuidGenerator
     private UUID uuid;
 
+
     @Column(nullable=false)
     private String name;
 
@@ -37,12 +38,9 @@ public class User{
     @Column(nullable=false)
     private String password;
 
+    @Column(nullable = false )
+    private Boolean isStaff  = false;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Long getId() {
-        return id;
-    }
+
 }
