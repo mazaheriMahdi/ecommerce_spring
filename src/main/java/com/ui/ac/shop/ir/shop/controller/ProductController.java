@@ -4,7 +4,9 @@ import com.ui.ac.shop.ir.shop.Service.ProductPropertyServices;
 import com.ui.ac.shop.ir.shop.Service.ProductService;
 import com.ui.ac.shop.ir.shop.model.Product;
 import com.ui.ac.shop.ir.shop.model.ProductProperty;
+import com.ui.ac.shop.ir.shop.model.RequestModels.AddProductRequest;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.FullProduct;
+import com.ui.ac.shop.ir.shop.model.ResponseModels.ProductPropertiesResponse;
 import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,10 +51,17 @@ public class ProductController {
 
     }
 
+    @GetMapping(value = "test")
+    public ResponseEntity<AddProductRequest> getf(){
+        AddProductRequest addProductRequest = new AddProductRequest(productService.getProducts().get(0) , List.of(new ProductPropertiesResponse("CAR" , "101")));
+        return new ResponseEntity<>( addProductRequest , HttpStatus.OK);
+    }
+
 
 
     @PostMapping
-    public void addStudent(@RequestBody Product product) {
+    public void addProduct(@RequestBody AddProductRequest product) {
+        System.out.println(product);
         this.productService.addProduct(product);
 
     }

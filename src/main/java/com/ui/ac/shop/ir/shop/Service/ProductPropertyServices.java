@@ -24,6 +24,6 @@ public class ProductPropertyServices {
     }
 
     public List<ProductProperty> getByProductId(Long id){
-        return productPropertyRepository.findAll();
+        return productPropertyRepository.searchAllByProduct_Id(id);
     }
 }

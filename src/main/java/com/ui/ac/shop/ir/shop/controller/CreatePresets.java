@@ -45,7 +45,7 @@ public class CreatePresets {
 
 
         Product product = new Product("BMW X6", 100, 10000, 10, category);
-        productService.addProduct(product);
+        productService.addSimpleProduct(product);
 
 
         ProductProperty productProperty = new ProductProperty(product , propertiesKey , "1.1 Liter");

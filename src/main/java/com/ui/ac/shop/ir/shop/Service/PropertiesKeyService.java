@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Properties;
 
 @Service
 public class PropertiesKeyService {
@@ -22,7 +23,12 @@ public class PropertiesKeyService {
         return propertiesKeyRepository.findAll();
     }
 
-    public void addPropertiesKey(PropertiesKey propertiesKey){
+    public PropertiesKey addPropertiesKey(PropertiesKey propertiesKey){
+
+        if(propertiesKeyRepository.findByName(propertiesKey.getName()).isPresent()){
+            return propertiesKeyRepository.findByName(propertiesKey.getName()).get();
+        }
         propertiesKeyRepository.save(propertiesKey);
+        return propertiesKey;
     }
 }

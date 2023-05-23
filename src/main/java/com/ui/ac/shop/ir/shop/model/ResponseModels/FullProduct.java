@@ -12,6 +12,7 @@ import java.util.List;
 @Value
 public class FullProduct {
 
+
     Long id;
     String name;
     int count;
@@ -21,6 +22,7 @@ public class FullProduct {
     String image;
 
     List<ProductPropertiesResponse> productProperties;
+
 
 
     public FullProduct(Product product, List<ProductProperty> productProperties) {
@@ -33,11 +35,14 @@ public class FullProduct {
         this.image = product.getImage();
         this.productProperties = new ArrayList<>();
         for (ProductProperty productProperty : productProperties){
+
             String value = productProperty.getValue();
             String key = productProperty.getPropertiesKey().getName();
-
-            this.productProperties.add(new ProductPropertiesResponse( key , value  ));
+            this.productProperties.add(new ProductPropertiesResponse(  key , value  ));
         }
 
+
     }
+
+
 }
