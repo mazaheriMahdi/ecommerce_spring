@@ -31,4 +31,6 @@ public class ApplicationController {
     public ResponseEntity<Application> getApplication(@PathVariable Long applicationId){
         return new ResponseEntity<>(applicationService.getApplicationById(applicationId) , HttpStatus.OK);
     }
+
+
 }

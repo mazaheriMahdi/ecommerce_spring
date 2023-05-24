@@ -4,6 +4,7 @@ package com.ui.ac.shop.ir.shop.Service;
 import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Repository.ApplicationRepository;
 import com.ui.ac.shop.ir.shop.model.Application;
+import com.ui.ac.shop.ir.shop.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,17 @@ public class ApplicationService {
         Optional<Application> application =  applicationRepository.findApplicationById(id);
         if (application.isPresent())return application.get();
         throw new EntityNotFoundException("Application" , id);
+    }
+
+    public void acceptApplication(Long id){
+        Application application = this.getApplicationById(id);
+        application.setStatus(Status.ACCEPTED);
+        applicationRepository.save(application);
+    }
+    public void rejectApplication(Long id){
+        Application application = this.getApplicationById(id);
+        application.setStatus(Status.REJECTED);
+        applicationRepository.save(application);
     }
 
 }

@@ -1,10 +1,7 @@
 package com.ui.ac.shop.ir.shop.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -25,6 +22,10 @@ public class Review {
     private User user;
 
 
+
+
+    @OneToOne
+    private Application application;
 
     public Review(String comment, Product product, User user) {
         this.comment = comment;
