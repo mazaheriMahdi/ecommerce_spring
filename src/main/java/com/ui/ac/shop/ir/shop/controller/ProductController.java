@@ -1,5 +1,7 @@
 package com.ui.ac.shop.ir.shop.controller;
 
+import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
+import com.ui.ac.shop.ir.shop.Exception.NoTokenProvidedException;
 import com.ui.ac.shop.ir.shop.Service.ProductPropertyServices;
 import com.ui.ac.shop.ir.shop.Service.ProductService;
 import com.ui.ac.shop.ir.shop.model.Product;
@@ -39,6 +41,8 @@ public class ProductController {
 
     @GetMapping(value = "")
     public ResponseEntity<List<FullProduct>> getProduct() {
+        if(!UserCheckController.getIsLoggedIn())throw new InvalidTokenException();
+
         ArrayList<FullProduct> products = new ArrayList<>();
         for (Product product : productService.getProducts()) {
             products.add(toFullPRoduct(product));

@@ -35,6 +35,11 @@ public class UserService {
             return user.get();
         }throw new InvalidTokenException();
     }
+
+    public Boolean checkUserExistence(UUID token){
+        return userRepository.findByUuid(token).isPresent();
+    }
+
     public List<User> getAll(){
         return userRepository.findAll();
     }
