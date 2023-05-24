@@ -16,6 +16,18 @@ import java.util.UUID;
 @Service
 public class UserService {
     UserRepository userRepository;
+    private User currentUser;
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+    public void setCurrentUser(UUID token) {
+        this.currentUser = this.getByToken(token);
+    }
 
     @Autowired
     public UserService(UserRepository userRepository) {

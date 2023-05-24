@@ -41,7 +41,6 @@ public class ProductController {
 
     @GetMapping(value = "")
     public ResponseEntity<List<FullProduct>> getProduct() {
-        if(!UserCheckController.getIsLoggedIn())throw new InvalidTokenException();
 
         ArrayList<FullProduct> products = new ArrayList<>();
         for (Product product : productService.getProducts()) {

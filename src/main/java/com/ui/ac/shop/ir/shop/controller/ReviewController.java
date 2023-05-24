@@ -11,10 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/review")
+@RequestMapping("/product")
 public class ReviewController {
     ReviewService reviewService;
     UserService userService;
@@ -25,12 +26,13 @@ public class ReviewController {
         this.userService = userService;
         this.productService = productService;
     }
-    @GetMapping(value = "/add")
+    @GetMapping(value = "/{productId}/review")
     public ResponseEntity<MessageResponseModel> addReview(
-            @RequestHeader(HttpHeaders.AUTHORIZATION) UUID uuid,
-            @RequestParam(name = "product_id") Long productId,
-            @RequestParam(name = "content") String review) {
-        reviewService.addReview(new Review(review , productService.getProductById(productId) , userService.getByToken(uuid)));
+            @RequestParam(name = "content") String review ,
+            @PathVariable Long productId) {
+        UserCheckController.CHECK_USER_LOGIN();
+        reviewService.addReview(new Review(review , productService.getProductById(productId) , userService.getCurrentUser()));
         return new  ResponseEntity<MessageResponseModel>(new MessageResponseModel("Review added"),HttpStatus.OK);
     }
+
 }
