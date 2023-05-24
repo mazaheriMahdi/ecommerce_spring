@@ -3,6 +3,7 @@ package com.ui.ac.shop.ir.shop.controller;
 import com.ui.ac.shop.ir.shop.Service.ProductService;
 import com.ui.ac.shop.ir.shop.Service.ReviewService;
 import com.ui.ac.shop.ir.shop.Service.UserService;
+import com.ui.ac.shop.ir.shop.model.ResponseModels.ReviewResponseModel;
 import com.ui.ac.shop.ir.shop.model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,17 +27,17 @@ public class ReviewController {
     }
 
     @GetMapping(value = "/{productId}/review")
-    public ResponseEntity<List<Review>> addReview(
+    public ResponseEntity<List<ReviewResponseModel>> addReview(
             @RequestParam(name = "content", defaultValue = "") String review,
             @PathVariable Long productId) {
         UserCheckController.CHECK_USER_LOGIN();
-        List<Review> reviews;
+        List<ReviewResponseModel> reviews;
         if (review.equals("")) {
-            reviews = reviewService.getReviewByProductId(productId);
+            reviews = reviewService.getReviewResponseModelByProductId(productId);
         } else {
             Review temp = new Review(review, productService.getProductById(productId), userService.getCurrentUser());
             reviewService.addReview(temp);
-            reviews = List.of(temp);
+            reviews = List.of(new ReviewResponseModel( temp.getComment() , temp.getUser().getName()));
         }
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }

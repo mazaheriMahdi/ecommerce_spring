@@ -14,4 +14,5 @@ public interface ProductRepository extends JpaRepository<Product , Long> {
     Optional<Product> searchAllByName(String searchQuery);
     Optional<Product> findAllByCategory(Category category);
 
+
  }

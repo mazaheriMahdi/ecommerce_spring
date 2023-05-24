@@ -9,7 +9,7 @@ import lombok.Value;
 @Value
 public class ReviewResponseModel {
 
-    Long product_id;
+
     String content;
     String userName;
 

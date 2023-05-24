@@ -24,6 +24,8 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User user;
 
+
+
     public Review(String comment, Product product, User user) {
         this.comment = comment;
         this.product = product;
