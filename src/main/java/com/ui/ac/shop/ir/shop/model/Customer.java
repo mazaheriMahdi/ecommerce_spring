@@ -20,7 +20,13 @@ import lombok.Setter;
 public class Customer {
     @Id
     private Long id;
-    @OneToOne
-    private Cart cart;
+
     private double credit=0;
+
+    @OneToOne
+    private User user;
+
+    public Customer(User user) {
+        this.user = user;
+    }
 }
