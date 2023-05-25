@@ -61,7 +61,7 @@ public class CartController {
         }
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/item")
     public ResponseEntity<CartItem> createCartItem(@PathVariable UUID id , @RequestBody AddCartItemRequestModel requestModel){
         UserCheckController.CHECK_USER_LOGIN();
         User user = userService.getCurrentUser();
@@ -76,5 +76,6 @@ public class CartController {
         }
 
     }
+
 
 }
