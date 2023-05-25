@@ -40,7 +40,7 @@ public class OrderService {
         orderRepository.deleteById(id);
     }
 
-    public List<OrderResponseModel> getAllOrderResponseModel(Long id){
+    public List<OrderResponseModel> getAllCustomerOrderResponseModel(Long id){
         Optional<Order> orders =  orderRepository.findByCustomerId(id);
         if (orders.isPresent()){
             List<OrderResponseModel> orderResponseModels = new ArrayList<>();
