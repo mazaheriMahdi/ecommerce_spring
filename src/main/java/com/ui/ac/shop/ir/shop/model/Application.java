@@ -15,6 +15,7 @@ import lombok.Setter;
 public class Application {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.ORDINAL)
     private Status status;
