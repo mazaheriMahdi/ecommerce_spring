@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 
 @Setter
@@ -16,21 +19,24 @@ import lombok.Setter;
 @Entity
 public class Payment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cardNumber;
     private String cvv2;
-    private String expireDate;
+
     private double amount;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate localDate = LocalDate.now();
     @ManyToOne
     private Customer customer;
 
     @Enumerated(EnumType.ORDINAL)
     private Status status = Status.PENDING;
 
-    public Payment(String cardNumber, String cvv2, String expireDate, double amount, Customer customer) {
+    public Payment(String cardNumber, String cvv2, double amount, Customer customer) {
         this.cardNumber = cardNumber;
         this.cvv2 = cvv2;
-        this.expireDate = expireDate;
         this.amount = amount;
         this.customer = customer;
     }
