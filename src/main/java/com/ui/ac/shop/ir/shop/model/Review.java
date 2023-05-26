@@ -27,9 +27,10 @@ public class Review {
     @OneToOne
     private Application application;
 
-    public Review(String comment, Product product, User user) {
+    public Review(String comment, Product product, User user, Application application) {
         this.comment = comment;
         this.product = product;
         this.user = user;
+        this.application = application;
     }
 }
