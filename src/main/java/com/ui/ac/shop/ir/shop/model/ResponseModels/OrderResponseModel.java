@@ -17,5 +17,7 @@ public class OrderResponseModel {
 
      List<OrderItemResponseModel> orderItems;
 
+     double totalPrice;
+
 
 }

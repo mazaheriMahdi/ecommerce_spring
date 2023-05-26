@@ -2,9 +2,12 @@ package com.ui.ac.shop.ir.shop.Service;
 
 
 import com.ui.ac.shop.ir.shop.Exception.CartIsEmptyException;
+import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Repository.CartItemRepository;
 import com.ui.ac.shop.ir.shop.model.Cart.CartItem;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.CartItemResponseModel;
+import jakarta.persistence.Lob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +48,12 @@ public class CartItemService {
 
             cartItemRepository.save(cartItem);
         }
+    }
+
+    public void deleteCartItem(UUID cartId , Long productId) {
+        Optional<CartItem> cartItem = cartItemRepository.findCartItemByProductIdAndCart_Id(productId, cartId);
+        if (cartItem.isPresent()) {
+            cartItemRepository.delete(cartItem.get());
+        }else throw new EntityNotFoundException("Cart Item" , "Product_id" , productId.toString());
     }
 }

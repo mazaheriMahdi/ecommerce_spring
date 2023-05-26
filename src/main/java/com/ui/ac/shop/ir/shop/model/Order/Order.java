@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "order_table")
 public class Order {
@@ -31,7 +30,9 @@ public class Order {
     private Customer customer;
 
     @Enumerated(EnumType.ORDINAL)
-    OrderStatus orderStatus;
+    OrderStatus orderStatus = OrderStatus.PENDING;
+
+
 
     public Order(Customer customer) {
         this.customer = customer;

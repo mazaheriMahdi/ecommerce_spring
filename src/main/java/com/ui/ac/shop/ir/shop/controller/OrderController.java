@@ -41,7 +41,7 @@ public class OrderController {
 
     @PostMapping("/{cartId}")
     public ResponseEntity<UUID> createOrder(@PathVariable UUID cartId, @RequestAttribute("customer") Customer customer){
-        orderService.createOrder(cartId , customer.getId());
+        orderService.createOrder(cartId , customer);
         return new ResponseEntity<>(cartId, HttpStatus.OK);
     }
 

@@ -25,7 +25,6 @@ public class Cart {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate place_date = LocalDate.now();
 
-
     @OneToOne(cascade = CascadeType.REMOVE)
     private Customer customer;
 

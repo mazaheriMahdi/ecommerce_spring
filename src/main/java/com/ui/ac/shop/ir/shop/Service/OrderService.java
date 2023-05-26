@@ -2,19 +2,20 @@ package com.ui.ac.shop.ir.shop.Service;
 
 
 import com.ui.ac.shop.ir.shop.Exception.*;
-import com.ui.ac.shop.ir.shop.Repository.CartItemRepository;
-import com.ui.ac.shop.ir.shop.Repository.CartRepository;
-import com.ui.ac.shop.ir.shop.Repository.OrderItemRepository;
-import com.ui.ac.shop.ir.shop.Repository.OrderRepository;
+import com.ui.ac.shop.ir.shop.Repository.*;
 import com.ui.ac.shop.ir.shop.model.Cart.Cart;
 import com.ui.ac.shop.ir.shop.model.Cart.CartItem;
+import com.ui.ac.shop.ir.shop.model.Enums.OrderStatus;
 import com.ui.ac.shop.ir.shop.model.Order.Order;
 import com.ui.ac.shop.ir.shop.model.Order.OrderItem;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderItemResponseModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderResponseModel;
+import com.ui.ac.shop.ir.shop.model.User.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.InsufficientResourcesException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,14 +27,18 @@ public class OrderService {
     CartItemRepository cartItemRepository;
     CartRepository cartRepository;
     OrderItemRepository orderItemRepository;
-
+    CustomerRepository customerRepository;
+    ProductRepository productRepository;
     @Autowired
-    public OrderService(OrderRepository orderRepository, CartItemRepository cartItemRepository, CartRepository cartRepository, OrderItemRepository orderItemRepository) {
+    public OrderService(OrderRepository orderRepository, CartItemRepository cartItemRepository, CartRepository cartRepository, OrderItemRepository orderItemRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.cartItemRepository = cartItemRepository;
         this.cartRepository = cartRepository;
         this.orderItemRepository = orderItemRepository;
+        this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
+
 
     public void addOrder(Order order) {
         orderRepository.save(order);
@@ -43,13 +48,13 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public void createOrder(UUID cartId, Long customerId) {
+    public void createOrder(UUID cartId, Customer customer) {
         Optional<Cart> cart = cartRepository.findById(cartId);
 
         // Check if cart is present
         if (cart.isPresent()) {
             // Check if cart belongs to the customer
-            if (!cart.get().getCustomer().getId().equals(customerId)) throw new InvalidCartIdException();
+            if (!cart.get().getCustomer().getId().equals(customer.getId())) throw new InvalidCartIdException();
 
             Optional<List<CartItem>> cartItems = cartItemRepository.findCartItemsByCartId(cartId);
 
@@ -57,17 +62,31 @@ public class OrderService {
             if (cartItems.isPresent()) {
                 // Create order
                 Order order = new Order(cart.get().getCustomer());
-                orderRepository.save(order);
+                order.setOrderStatus(OrderStatus.PENDING);
 
+                double totalPrice = 0 ;
                 // Create order items
                 for (CartItem cartItem : cartItems.get()) {
+                    Product product = new Product();
+                    if (product.getCount() < cartItem.getQuantity())throw new LackOfInventory();
+                    product.setCount(product.getCount() - cartItem.getQuantity());
+                    productRepository.save(product);
+
                     OrderItem orderItem = new OrderItem(order, cartItem.getProduct(), cartItem.getQuantity());
                     orderItemRepository.save(orderItem);
+                    totalPrice += orderItem.getTotalPrice();
                 }
                 // Delete cart items
                 cartItemRepository.deleteAll(cartItems.get());
 //                cartRepository.delete(cart.get());
-
+                if (totalPrice >  customer.getCredit()) {
+                    order.setOrderStatus(OrderStatus.FAILED);
+                    orderRepository.save(order);
+                    throw new NotEnoughCreditException();
+                };
+                customer.setCredit(customer.getCredit() - totalPrice);
+                order.setOrderStatus(OrderStatus.SUCCESS);
+                orderRepository.save(order);
                 // If cart items is not present
             } else throw new CartIsEmptyException();
 
@@ -113,8 +132,9 @@ public class OrderService {
 
             //get all order item for each order
             for (Order order : orders.get()) {
+                double totalPrice = 0;
                 Optional<List<OrderItem>> orderItems = orderItemRepository.findAllByOrderId(order.getId());
-                List<OrderItemResponseModel> orderItemResponseModels  = new ArrayList<>();
+                List<OrderItemResponseModel> orderItemResponseModels = new ArrayList<>();
                 //check if order item is exist for given order
                 if (orderItems.isEmpty()) throw new NoOrderItemException();
                 for (OrderItem orderItem : orderItems.get()) {
@@ -123,14 +143,17 @@ public class OrderService {
                             orderItem.getQuantity(),
                             orderItem.getTotalPrice()
                     ));
+                    totalPrice += orderItem.getTotalPrice();
                 }
+
 
                 //add order response model to list
                 orderResponseModels.add(new OrderResponseModel(
                         order.getId(),
                         order.getCustomer().getId(),
                         order.getPlacedAt(),
-                        orderItemResponseModels
+                        orderItemResponseModels,
+                        totalPrice
                         ));
 
             }

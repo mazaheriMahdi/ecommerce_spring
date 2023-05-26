@@ -2,7 +2,15 @@ package com.ui.ac.shop.ir.shop.model.Product;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table
 public class Product {
@@ -17,11 +25,7 @@ public class Product {
     private int count;
     private int price;
 
-
     private double averagePoint;
-
-
-
 
 
 
@@ -29,28 +33,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-
-
-
-    public Product() {
-    }
 
     public Product(Long id, String name, int count, int price, double averagePoint, Category category) {
         this.id = id;
@@ -70,45 +52,7 @@ public class Product {
         this.category = category;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public double getAveragePoint() {
-        return averagePoint;
-    }
-
-    public void setAveragePoint(double averagePoint) {
-        this.averagePoint = averagePoint;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
 
 

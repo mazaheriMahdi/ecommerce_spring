@@ -11,6 +11,7 @@ import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.RequestModels.AddCartItemRequestModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.CartCreateResponseModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.CartResponseModel;
+import com.ui.ac.shop.ir.shop.model.ResponseModels.MessageResponseModel;
 import com.ui.ac.shop.ir.shop.model.User.Customer;
 import com.ui.ac.shop.ir.shop.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,17 @@ public class CartController {
             throw new InvalidCartIdException();
         }
     }
+    @DeleteMapping("/{id}/items/{cartId}/{productId}")
+    public ResponseEntity<MessageResponseModel> deleteCartItem(@PathVariable UUID id , @PathVariable UUID cartId, @RequestAttribute("customer") Customer customer , @RequestAttribute("user") User user, @PathVariable Long productId){
+        Cart cart = cartService.getCustomerCart(customer.getId());
+        if (cart.getId().equals(id)) {
+            cartItemService.deleteCartItem(cartId, productId);
+            return ResponseEntity.ok(new MessageResponseModel("cart item deleted successfully"));
+        } else {
+            throw new InvalidCartIdException();
+        }
+    }
+
 
     @PostMapping("/{id}/items")
     public ResponseEntity<CartResponseModel> createCartItem(

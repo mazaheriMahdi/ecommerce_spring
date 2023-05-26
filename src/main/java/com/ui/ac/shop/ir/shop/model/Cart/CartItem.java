@@ -27,6 +27,13 @@ public class CartItem {
     @ManyToOne
     private Cart cart;
 
+    @Transient
+    private double totalPrice;
+
+    public double getTotalPrice() {
+        return product.getPrice() * quantity;
+    }
+
     public CartItem(Product product, int quantity, Cart cart) {
         this.product = product;
         this.quantity = quantity;

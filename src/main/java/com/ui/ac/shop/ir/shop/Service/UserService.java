@@ -60,4 +60,8 @@ public class UserService {
             throw new TakenEmailException(user.getEmail());
         }
     }
+
+    public void updateUser(User user){
+        userRepository.save(user);
+    }
 }
