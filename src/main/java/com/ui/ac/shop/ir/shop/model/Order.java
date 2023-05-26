@@ -29,6 +29,9 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @Enumerated(EnumType.ORDINAL)
+    OrderStatus orderStatus;
+
     public Order(Customer customer) {
         this.customer = customer;
     }
