@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "order_table")
 public class Order {
 
     @Id
@@ -25,6 +26,7 @@ public class Order {
     private LocalDate placedAt = LocalDate.now();
 
     @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     public Order(Customer customer) {

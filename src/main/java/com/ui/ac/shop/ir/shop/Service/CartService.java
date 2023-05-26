@@ -4,7 +4,9 @@ package com.ui.ac.shop.ir.shop.Service;
 import com.ui.ac.shop.ir.shop.Repository.CartRepository;
 import com.ui.ac.shop.ir.shop.Repository.CustomerRepository;
 import com.ui.ac.shop.ir.shop.model.Cart;
+import com.ui.ac.shop.ir.shop.model.CartItem;
 import com.ui.ac.shop.ir.shop.model.Customer;
+import com.ui.ac.shop.ir.shop.model.ResponseModels.CartResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class CartService {
     CartRepository cartRepository;
     CustomerRepository customerRepository;
+
 
     @Autowired
     public CartService(CartRepository cartRepository, CustomerRepository customerRepository) {
@@ -38,6 +41,7 @@ public class CartService {
         }
         return cartRepository.findCartByCustomerId(id).get();
     }
+
 
 
 }

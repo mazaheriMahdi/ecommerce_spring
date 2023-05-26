@@ -4,7 +4,9 @@ package com.ui.ac.shop.ir.shop.Service;
 import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
 import com.ui.ac.shop.ir.shop.Exception.TakenEmailException;
+import com.ui.ac.shop.ir.shop.Repository.CustomerRepository;
 import com.ui.ac.shop.ir.shop.Repository.UserRepository;
+import com.ui.ac.shop.ir.shop.model.Customer;
 import com.ui.ac.shop.ir.shop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +18,19 @@ import java.util.UUID;
 @Service
 public class UserService {
     UserRepository userRepository;
-    private User currentUser;
+    CustomerRepository customerRepository;
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-    public void setCurrentUser(UUID token) {
-        this.currentUser = this.getByToken(token);
-    }
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CustomerRepository customerRepository) {
         this.userRepository = userRepository;
+        this.customerRepository = customerRepository;
     }
+
+
+
+
+
 
     public User getUserByEmail(String email){
         Optional<User> user = userRepository.findByEmail(email);
@@ -49,7 +47,7 @@ public class UserService {
     }
 
     public Boolean checkUserExistence(UUID token){
-        return userRepository.findByUuid(token).isPresent();
+        return userRepository.existsByUuid(token);
     }
 
     public List<User> getAll(){
