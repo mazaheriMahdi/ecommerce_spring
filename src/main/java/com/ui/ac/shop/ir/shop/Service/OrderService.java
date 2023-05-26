@@ -75,13 +75,15 @@ public class OrderService {
         } else throw new EntityNotFoundException("Cart", cartId);
 
     }
-    public OrderItemResponseModel getOrderItemResponse(Long id , Long customerId) {
+
+    public OrderItemResponseModel getOrderItemResponse(Long id, Long customerId) {
 
         Optional<OrderItem> orderItem = orderItemRepository.findById(id);
         //check if order item is exist
         if (orderItem.isPresent()) {
             //check if order item belongs to the customer
-            if (!orderItem.get().getOrder().getCustomer().getId().equals(customerId)) throw new EntityNotFoundException("Order Item", id);
+            if (!orderItem.get().getOrder().getCustomer().getId().equals(customerId))
+                throw new EntityNotFoundException("Order Item", id);
             return new OrderItemResponseModel(
                     orderItem.get().getProduct().getId(),
                     orderItem.get().getQuantity(),
@@ -112,16 +114,24 @@ public class OrderService {
             //get all order item for each order
             for (Order order : orders.get()) {
                 Optional<List<OrderItem>> orderItems = orderItemRepository.findAllByOrderId(order.getId());
+                List<OrderItemResponseModel> orderItemResponseModels  = new ArrayList<>();
                 //check if order item is exist for given order
                 if (orderItems.isEmpty()) throw new NoOrderItemException();
+                for (OrderItem orderItem : orderItems.get()) {
+                    orderItemResponseModels.add(new OrderItemResponseModel(
+                            orderItem.getProduct().getId(),
+                            orderItem.getQuantity(),
+                            orderItem.getTotalPrice()
+                    ));
+                }
 
                 //add order response model to list
                 orderResponseModels.add(new OrderResponseModel(
                         order.getId(),
-                        order.getCustomer(),
+                        order.getCustomer().getId(),
                         order.getPlacedAt(),
-                        orderItems.get()
-                ));
+                        orderItemResponseModels
+                        ));
 
             }
             return orderResponseModels;
