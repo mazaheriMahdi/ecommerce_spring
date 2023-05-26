@@ -3,17 +3,14 @@ package com.ui.ac.shop.ir.shop.controller;
 
 import com.ui.ac.shop.ir.shop.Exception.CartIdNotProvidedException;
 import com.ui.ac.shop.ir.shop.Exception.InvalidCartIdException;
-import com.ui.ac.shop.ir.shop.Service.CartItemService;
-import com.ui.ac.shop.ir.shop.Service.CartService;
-import com.ui.ac.shop.ir.shop.Service.CustomerService;
-import com.ui.ac.shop.ir.shop.Service.UserService;
-import com.ui.ac.shop.ir.shop.model.Cart;
-import com.ui.ac.shop.ir.shop.model.CartItem;
-import com.ui.ac.shop.ir.shop.model.Customer;
+import com.ui.ac.shop.ir.shop.Service.*;
+import com.ui.ac.shop.ir.shop.model.*;
 import com.ui.ac.shop.ir.shop.model.RequestModels.AddCartItemRequestModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.CartCreateResponseModel;
-import com.ui.ac.shop.ir.shop.model.User;
+import com.ui.ac.shop.ir.shop.model.ResponseModels.CartItemResponseModel;
+import com.ui.ac.shop.ir.shop.model.ResponseModels.CartResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,50 +25,55 @@ public class CartController {
     UserService userService;
     CustomerService customerService;
 
+    ProductService  productService;
+
     @Autowired
-    public CartController(CartService cartService, CartItemService cartItemService, UserService userService, CustomerService customerService) {
+    public CartController(CartService cartService, CartItemService cartItemService, UserService userService, CustomerService customerService, ProductService productService) {
         this.cartService = cartService;
         this.cartItemService = cartItemService;
         this.userService = userService;
         this.customerService = customerService;
+        this.productService = productService;
     }
 
     @PostMapping
-    public ResponseEntity<CartCreateResponseModel> createCart() {
-        UserCheckController.CHECK_USER_LOGIN();
-        User user = userService.getCurrentUser();
+    public ResponseEntity<CartCreateResponseModel> createCart(@RequestAttribute("user") User user) {
+
         Customer customer = customerService.getCustomerByUserID(user.getId());
         return ResponseEntity.ok(new CartCreateResponseModel(cartService.getCustomerCart(customer.getId()).getId()));
     }
 
     @GetMapping("/")
-    public void sendError(){
+    public void sendError() {
         throw new CartIdNotProvidedException();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<CartItem>> getCartItems(@PathVariable UUID id){
-        UserCheckController.CHECK_USER_LOGIN();
-        User user = userService.getCurrentUser();
+    public ResponseEntity<CartResponseModel> getCartItems(@PathVariable UUID id , @RequestAttribute("user") User user) {
         Customer customer = customerService.getCustomerByUserID(user.getId());
-        if (cartService.getCustomerCart(customer.getId()).getId().equals(id)) {
-            return ResponseEntity.ok(cartItemService.getCartItems(id));
-        }else {
+        Cart cart = cartService.getCustomerCart(customer.getId());
+        if (cart.getId().equals(id)) {
+            CartResponseModel cartResponseModel = new CartResponseModel(cart.getPlace_date() , cartItemService.getCartItemsResponseModel(id));
+            return new ResponseEntity<>(cartResponseModel , HttpStatus.OK);
+        } else {
             throw new InvalidCartIdException();
         }
     }
 
-    @PostMapping("/{id}/item")
-    public ResponseEntity<CartItem> createCartItem(@PathVariable UUID id , @RequestBody AddCartItemRequestModel requestModel){
-        UserCheckController.CHECK_USER_LOGIN();
-        User user = userService.getCurrentUser();
+    @PostMapping("/{id}/items")
+    public ResponseEntity<CartResponseModel> createCartItem(
+            @PathVariable UUID id,
+            @RequestBody AddCartItemRequestModel requestModel ,
+            @RequestAttribute("user") User user
+    ) {
         Customer customer = customerService.getCustomerByUserID(user.getId());
         Cart cart = cartService.getCustomerCart(customer.getId());
         if (cart.getId().equals(id)) {
-            CartItem cartItem = new CartItem(requestModel.getProduct() , requestModel.getQuantity() , cart);
+            Product product = productService.getProductById(requestModel.getProductId());
+            CartItem cartItem = new CartItem(product, requestModel.getQuantity(), cart);
             cartItemService.addCartItem(cartItem);
-            return ResponseEntity.ok(cartItem);
-        }else {
+            return ResponseEntity.ok(new CartResponseModel(cart.getPlace_date() , cartItemService.getCartItemsResponseModel(id)));
+        } else {
             throw new InvalidCartIdException();
         }
 
