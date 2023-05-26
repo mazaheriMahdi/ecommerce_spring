@@ -19,10 +19,10 @@ import java.util.List;
 @Value
 public class OrderResponseModel {
      Long id;
-     Customer customer;
+     Long customerId;
      LocalDate placedAt ;
 
-     List<OrderItem> orderItems;
+     List<OrderItemResponseModel> orderItems;
 
 
 }
