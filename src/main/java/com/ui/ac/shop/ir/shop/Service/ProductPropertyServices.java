@@ -1,7 +1,7 @@
 package com.ui.ac.shop.ir.shop.Service;
 
 import com.ui.ac.shop.ir.shop.Repository.ProductPropertyRepository;
-import com.ui.ac.shop.ir.shop.model.ProductProperty;
+import com.ui.ac.shop.ir.shop.model.Product.ProductProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

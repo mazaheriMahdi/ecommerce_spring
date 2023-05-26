@@ -6,8 +6,7 @@ import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
 import com.ui.ac.shop.ir.shop.Exception.TakenEmailException;
 import com.ui.ac.shop.ir.shop.Repository.CustomerRepository;
 import com.ui.ac.shop.ir.shop.Repository.UserRepository;
-import com.ui.ac.shop.ir.shop.model.Customer;
-import com.ui.ac.shop.ir.shop.model.User;
+import com.ui.ac.shop.ir.shop.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

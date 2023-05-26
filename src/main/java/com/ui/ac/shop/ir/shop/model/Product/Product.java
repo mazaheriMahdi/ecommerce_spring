@@ -1,11 +1,7 @@
-package com.ui.ac.shop.ir.shop.model;
+package com.ui.ac.shop.ir.shop.model.Product;
 
-import com.ui.ac.shop.ir.shop.model.ResponseModels.FullProduct;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ListIndexBase;
-
-import java.util.List;
 
 @Entity
 @Table

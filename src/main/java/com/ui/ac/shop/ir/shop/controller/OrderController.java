@@ -3,12 +3,9 @@ package com.ui.ac.shop.ir.shop.controller;
 
 import com.ui.ac.shop.ir.shop.Service.OrderService;
 import com.ui.ac.shop.ir.shop.Service.UserService;
-import com.ui.ac.shop.ir.shop.model.Customer;
-import com.ui.ac.shop.ir.shop.model.RequestModels.CreateOrderRequestModel;
-import com.ui.ac.shop.ir.shop.model.ResponseModels.MessageResponseModel;
+import com.ui.ac.shop.ir.shop.model.User.Customer;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderItemResponseModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderResponseModel;
-import com.ui.ac.shop.ir.shop.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

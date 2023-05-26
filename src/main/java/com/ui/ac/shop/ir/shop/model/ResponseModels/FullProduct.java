@@ -1,8 +1,8 @@
 package com.ui.ac.shop.ir.shop.model.ResponseModels;
 
-import com.ui.ac.shop.ir.shop.model.Category;
-import com.ui.ac.shop.ir.shop.model.Product;
-import com.ui.ac.shop.ir.shop.model.ProductProperty;
+import com.ui.ac.shop.ir.shop.model.Product.Category;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
+import com.ui.ac.shop.ir.shop.model.Product.ProductProperty;
 import lombok.Value;
 
 import java.util.ArrayList;

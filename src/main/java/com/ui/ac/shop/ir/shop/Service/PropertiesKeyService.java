@@ -2,12 +2,11 @@ package com.ui.ac.shop.ir.shop.Service;
 
 
 import com.ui.ac.shop.ir.shop.Repository.PropertiesKeyRepository;
-import com.ui.ac.shop.ir.shop.model.PropertiesKey;
+import com.ui.ac.shop.ir.shop.model.Product.PropertiesKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Properties;
 
 @Service
 public class PropertiesKeyService {

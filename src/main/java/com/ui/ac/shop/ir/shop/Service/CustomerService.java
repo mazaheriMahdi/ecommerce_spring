@@ -3,8 +3,8 @@ package com.ui.ac.shop.ir.shop.Service;
 import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Repository.CustomerRepository;
 import com.ui.ac.shop.ir.shop.Repository.UserRepository;
-import com.ui.ac.shop.ir.shop.model.Customer;
-import com.ui.ac.shop.ir.shop.model.User;
+import com.ui.ac.shop.ir.shop.model.User.Customer;
+import com.ui.ac.shop.ir.shop.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +30,9 @@ public class CustomerService {
 
     }
 
+    public void updateCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
     public void createCustomer(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {

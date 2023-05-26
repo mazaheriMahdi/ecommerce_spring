@@ -1,6 +1,6 @@
 package com.ui.ac.shop.ir.shop.Repository;
 
-import com.ui.ac.shop.ir.shop.model.Order;
+import com.ui.ac.shop.ir.shop.model.Order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

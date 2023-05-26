@@ -1,7 +1,6 @@
 package com.ui.ac.shop.ir.shop.model.ResponseModels;
 
-import com.ui.ac.shop.ir.shop.model.Product;
-import lombok.AllArgsConstructor;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
 import lombok.Value;
 
 @Value

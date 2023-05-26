@@ -3,10 +3,8 @@ package com.ui.ac.shop.ir.shop.Service;
 
 import com.ui.ac.shop.ir.shop.Repository.CartRepository;
 import com.ui.ac.shop.ir.shop.Repository.CustomerRepository;
-import com.ui.ac.shop.ir.shop.model.Cart;
-import com.ui.ac.shop.ir.shop.model.CartItem;
-import com.ui.ac.shop.ir.shop.model.Customer;
-import com.ui.ac.shop.ir.shop.model.ResponseModels.CartResponseModel;
+import com.ui.ac.shop.ir.shop.model.Cart.Cart;
+import com.ui.ac.shop.ir.shop.model.User.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

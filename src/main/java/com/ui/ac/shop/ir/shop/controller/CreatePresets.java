@@ -4,18 +4,14 @@ import com.ui.ac.shop.ir.shop.Service.CategoryService;
 import com.ui.ac.shop.ir.shop.Service.ProductPropertyServices;
 import com.ui.ac.shop.ir.shop.Service.ProductService;
 import com.ui.ac.shop.ir.shop.Service.PropertiesKeyService;
-import com.ui.ac.shop.ir.shop.model.Category;
-import com.ui.ac.shop.ir.shop.model.Product;
-import com.ui.ac.shop.ir.shop.model.ProductProperty;
-import com.ui.ac.shop.ir.shop.model.PropertiesKey;
-import org.hibernate.mapping.Set;
+import com.ui.ac.shop.ir.shop.model.Product.Category;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
+import com.ui.ac.shop.ir.shop.model.Product.ProductProperty;
+import com.ui.ac.shop.ir.shop.model.Product.PropertiesKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/create")

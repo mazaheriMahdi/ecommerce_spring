@@ -1,8 +1,6 @@
-package com.ui.ac.shop.ir.shop.model;
+package com.ui.ac.shop.ir.shop.model.Product;
 
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table

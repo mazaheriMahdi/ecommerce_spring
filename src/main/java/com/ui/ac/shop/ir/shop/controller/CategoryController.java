@@ -2,9 +2,8 @@ package com.ui.ac.shop.ir.shop.controller;
 
 
 import com.ui.ac.shop.ir.shop.Service.CategoryService;
-import com.ui.ac.shop.ir.shop.model.Category;
+import com.ui.ac.shop.ir.shop.model.Product.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

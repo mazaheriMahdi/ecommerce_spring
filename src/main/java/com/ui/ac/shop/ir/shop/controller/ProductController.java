@@ -1,15 +1,11 @@
 package com.ui.ac.shop.ir.shop.controller;
 
-import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
-import com.ui.ac.shop.ir.shop.Exception.NoTokenProvidedException;
 import com.ui.ac.shop.ir.shop.Service.ProductPropertyServices;
 import com.ui.ac.shop.ir.shop.Service.ProductService;
-import com.ui.ac.shop.ir.shop.model.Product;
-import com.ui.ac.shop.ir.shop.model.ProductProperty;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.RequestModels.AddProductRequest;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.FullProduct;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.ProductPropertiesResponse;
-import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

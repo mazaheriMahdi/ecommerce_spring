@@ -6,7 +6,7 @@ import com.ui.ac.shop.ir.shop.Service.UserService;
 import com.ui.ac.shop.ir.shop.model.RequestModels.LoginRequestModel;
 import com.ui.ac.shop.ir.shop.model.RequestModels.SignInRequestModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.UserResponseModel;
-import com.ui.ac.shop.ir.shop.model.User;
+import com.ui.ac.shop.ir.shop.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

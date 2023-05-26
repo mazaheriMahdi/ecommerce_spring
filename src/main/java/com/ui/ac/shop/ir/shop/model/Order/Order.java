@@ -1,12 +1,13 @@
-package com.ui.ac.shop.ir.shop.model;
+package com.ui.ac.shop.ir.shop.model.Order;
 
 
+import com.ui.ac.shop.ir.shop.model.User.Customer;
+import com.ui.ac.shop.ir.shop.model.Enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.Parser;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

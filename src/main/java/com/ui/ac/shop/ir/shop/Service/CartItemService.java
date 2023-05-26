@@ -3,7 +3,7 @@ package com.ui.ac.shop.ir.shop.Service;
 
 import com.ui.ac.shop.ir.shop.Exception.CartIsEmptyException;
 import com.ui.ac.shop.ir.shop.Repository.CartItemRepository;
-import com.ui.ac.shop.ir.shop.model.CartItem;
+import com.ui.ac.shop.ir.shop.model.Cart.CartItem;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.CartItemResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

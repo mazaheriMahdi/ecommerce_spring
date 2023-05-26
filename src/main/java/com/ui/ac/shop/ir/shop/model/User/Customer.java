@@ -1,4 +1,4 @@
-package com.ui.ac.shop.ir.shop.model;
+package com.ui.ac.shop.ir.shop.model.User;
 
 
 import jakarta.persistence.*;

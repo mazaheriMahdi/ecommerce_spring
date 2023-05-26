@@ -1,6 +1,7 @@
-package com.ui.ac.shop.ir.shop.model;
+package com.ui.ac.shop.ir.shop.model.Order;
 
 
+import com.ui.ac.shop.ir.shop.model.Product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

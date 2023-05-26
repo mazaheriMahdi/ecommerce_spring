@@ -3,18 +3,16 @@ package com.ui.ac.shop.ir.shop.Service;
 import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Repository.ProductPropertyRepository;
 import com.ui.ac.shop.ir.shop.Repository.ProductRepository;
-//import com.ui.ac.shop.ir.shop.model.Category;
+//import com.ui.ac.shop.ir.shop.model.Product.Category;
 import com.ui.ac.shop.ir.shop.Repository.PropertiesKeyRepository;
-import com.ui.ac.shop.ir.shop.model.Product;
-import com.ui.ac.shop.ir.shop.model.ProductProperty;
-import com.ui.ac.shop.ir.shop.model.PropertiesKey;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
+import com.ui.ac.shop.ir.shop.model.Product.ProductProperty;
+import com.ui.ac.shop.ir.shop.model.Product.PropertiesKey;
 import com.ui.ac.shop.ir.shop.model.RequestModels.AddProductRequest;
-import com.ui.ac.shop.ir.shop.model.ResponseModels.FullProduct;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.ProductPropertiesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

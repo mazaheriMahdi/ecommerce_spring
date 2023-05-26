@@ -1,7 +1,7 @@
 package com.ui.ac.shop.ir.shop.Repository;
 
-import com.ui.ac.shop.ir.shop.model.Category;
-import com.ui.ac.shop.ir.shop.model.Product;
+import com.ui.ac.shop.ir.shop.model.Product.Category;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

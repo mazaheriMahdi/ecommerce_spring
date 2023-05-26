@@ -4,7 +4,7 @@ import com.ui.ac.shop.ir.shop.Exception.NoReviewFoundException;
 import com.ui.ac.shop.ir.shop.Repository.ReviewRepository;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.ReviewResponseModel;
 import com.ui.ac.shop.ir.shop.model.Review;
-import com.ui.ac.shop.ir.shop.model.Status;
+import com.ui.ac.shop.ir.shop.model.Enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

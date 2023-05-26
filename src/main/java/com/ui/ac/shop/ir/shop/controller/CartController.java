@@ -4,17 +4,19 @@ package com.ui.ac.shop.ir.shop.controller;
 import com.ui.ac.shop.ir.shop.Exception.CartIdNotProvidedException;
 import com.ui.ac.shop.ir.shop.Exception.InvalidCartIdException;
 import com.ui.ac.shop.ir.shop.Service.*;
-import com.ui.ac.shop.ir.shop.model.*;
+import com.ui.ac.shop.ir.shop.model.Cart.Cart;
+import com.ui.ac.shop.ir.shop.model.Cart.CartItem;
+import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.RequestModels.AddCartItemRequestModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.CartCreateResponseModel;
-import com.ui.ac.shop.ir.shop.model.ResponseModels.CartItemResponseModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.CartResponseModel;
+import com.ui.ac.shop.ir.shop.model.User.Customer;
+import com.ui.ac.shop.ir.shop.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
