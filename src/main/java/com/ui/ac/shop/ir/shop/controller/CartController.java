@@ -4,6 +4,7 @@ package com.ui.ac.shop.ir.shop.controller;
 import com.ui.ac.shop.ir.shop.Exception.CartIdNotProvidedException;
 import com.ui.ac.shop.ir.shop.Exception.InvalidCartIdException;
 import com.ui.ac.shop.ir.shop.Service.*;
+import com.ui.ac.shop.ir.shop.Service.product.ProductService;
 import com.ui.ac.shop.ir.shop.model.Cart.Cart;
 import com.ui.ac.shop.ir.shop.model.Cart.CartItem;
 import com.ui.ac.shop.ir.shop.model.Product.Product;
@@ -27,7 +28,7 @@ public class CartController {
     UserService userService;
     CustomerService customerService;
 
-    ProductService  productService;
+    ProductService productService;
 
     @Autowired
     public CartController(CartService cartService, CartItemService cartItemService, UserService userService, CustomerService customerService, ProductService productService) {

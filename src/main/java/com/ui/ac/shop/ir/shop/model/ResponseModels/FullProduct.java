@@ -4,13 +4,14 @@ import com.ui.ac.shop.ir.shop.model.Product.Category;
 import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.Product.ProductProperty;
 import lombok.Value;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Value
-public class FullProduct {
+public class FullProduct extends RepresentationModel<FullProduct> {
 
 
     Long id;

@@ -1,6 +1,7 @@
-package com.ui.ac.shop.ir.shop.Service;
+package com.ui.ac.shop.ir.shop.Service.product;
 
 import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
+import com.ui.ac.shop.ir.shop.Repository.ProductPaginationRepository;
 import com.ui.ac.shop.ir.shop.Repository.ProductPropertyRepository;
 import com.ui.ac.shop.ir.shop.Repository.ProductRepository;
 //import com.ui.ac.shop.ir.shop.model.Product.Category;
@@ -11,6 +12,8 @@ import com.ui.ac.shop.ir.shop.model.Product.PropertiesKey;
 import com.ui.ac.shop.ir.shop.model.RequestModels.AddProductRequest;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.ProductPropertiesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,15 +21,21 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
+
+
     private ProductRepository productRepository;
+
     private ProductPropertyRepository productPropertyRepository;
+
     private PropertiesKeyRepository propertiesKeyRepository;
+    private ProductPaginationRepository productPaginationRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, ProductPropertyRepository productPropertyRepository, PropertiesKeyRepository propertiesKeyRepository) {
+    public ProductService(ProductRepository productRepository, ProductPropertyRepository productPropertyRepository, PropertiesKeyRepository propertiesKeyRepository, ProductPaginationRepository productPaginationRepository) {
         this.productRepository = productRepository;
         this.productPropertyRepository = productPropertyRepository;
         this.propertiesKeyRepository = propertiesKeyRepository;
+        this.productPaginationRepository = productPaginationRepository;
     }
 
     public List<Product> getProducts() {
@@ -53,6 +62,10 @@ public class ProductService {
             propertiesKey = propertiesKeyRepository.findByName(p.getName()).get();
             productPropertyRepository.save(new ProductProperty(product.getProduct() , propertiesKey , p.getValue()));
         }
+    }
+
+    public Page<Product> getPagedProduct(Pageable pageable){
+        return productPaginationRepository.findAll(pageable);
     }
 
     public void addSimpleProduct(Product product){

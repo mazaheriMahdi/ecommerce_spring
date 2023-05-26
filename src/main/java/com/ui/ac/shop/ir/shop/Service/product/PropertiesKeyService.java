@@ -1,4 +1,4 @@
-package com.ui.ac.shop.ir.shop.Service;
+package com.ui.ac.shop.ir.shop.Service.product;
 
 
 import com.ui.ac.shop.ir.shop.Repository.PropertiesKeyRepository;

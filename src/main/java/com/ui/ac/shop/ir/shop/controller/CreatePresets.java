@@ -1,9 +1,9 @@
 package com.ui.ac.shop.ir.shop.controller;
 
 import com.ui.ac.shop.ir.shop.Service.CategoryService;
-import com.ui.ac.shop.ir.shop.Service.ProductPropertyServices;
-import com.ui.ac.shop.ir.shop.Service.ProductService;
-import com.ui.ac.shop.ir.shop.Service.PropertiesKeyService;
+import com.ui.ac.shop.ir.shop.Service.product.ProductPropertyServices;
+import com.ui.ac.shop.ir.shop.Service.product.ProductService;
+import com.ui.ac.shop.ir.shop.Service.product.PropertiesKeyService;
 import com.ui.ac.shop.ir.shop.model.Product.Category;
 import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.Product.ProductProperty;

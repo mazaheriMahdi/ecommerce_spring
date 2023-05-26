@@ -1,7 +1,7 @@
 package com.ui.ac.shop.ir.shop.controller;
 
 import com.ui.ac.shop.ir.shop.Service.ApplicationService;
-import com.ui.ac.shop.ir.shop.Service.ProductService;
+import com.ui.ac.shop.ir.shop.Service.product.ProductService;
 import com.ui.ac.shop.ir.shop.Service.ReviewService;
 import com.ui.ac.shop.ir.shop.Service.UserService;
 import com.ui.ac.shop.ir.shop.model.Application;
