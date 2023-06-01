@@ -31,8 +31,9 @@ public class ReviewService {
     }
 
     public List<Review> getReviewByProductId(Long productId) {
-        Optional<Review> reviews = reviewRepository.findAllByProductId(productId);
-        if (reviews.isPresent()) return reviews.stream().toList();
+        Optional<List<Review>> reviews = reviewRepository.findReviewsByProductId(productId);
+        System.out.println(reviews.get());
+        if (reviews.isPresent()) return reviews.get();
         throw new NoReviewFoundException(productId);
     }
 

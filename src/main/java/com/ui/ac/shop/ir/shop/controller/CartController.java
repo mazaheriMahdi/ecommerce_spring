@@ -76,7 +76,7 @@ public class CartController {
 
 
     @PostMapping("/{id}/items")
-    public ResponseEntity<CartResponseModel> createCartItem(
+    public ResponseEntity<MessageResponseModel> createCartItem(
             @PathVariable UUID id,
             @RequestBody AddCartItemRequestModel requestModel ,
             @RequestAttribute("user") User user
@@ -87,7 +87,7 @@ public class CartController {
             Product product = productService.getProductById(requestModel.getProductId());
             CartItem cartItem = new CartItem(product, requestModel.getQuantity(), cart);
             cartItemService.addCartItem(cartItem);
-            return ResponseEntity.ok(new CartResponseModel(cart.getPlace_date() , cartItemService.getCartItemsResponseModel(id)));
+            return new ResponseEntity<>(new MessageResponseModel("cart item added successfully") , HttpStatus.CREATED);
         } else {
             throw new InvalidCartIdException();
         }

@@ -12,6 +12,7 @@ import com.ui.ac.shop.ir.shop.model.Product.PropertiesKey;
 import com.ui.ac.shop.ir.shop.model.RequestModels.AddProductRequest;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.ProductPropertiesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,11 @@ public class ProductService {
 
     public Page<Product> getPagedProduct(Pageable pageable){
         return productPaginationRepository.findAll(pageable);
+
+    }
+
+    public Page<Product> searchProduct(String name , Pageable pageable){
+        return productPaginationRepository.findProductsByNameContainingOrCategoryName(name , name , pageable);
     }
 
     public void addSimpleProduct(Product product){

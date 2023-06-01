@@ -1,8 +1,10 @@
 package com.ui.ac.shop.ir.shop.controller;
 
 
+import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
 import com.ui.ac.shop.ir.shop.Exception.NoTokenProvidedException;
+import com.ui.ac.shop.ir.shop.Exception.WrongPasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,10 +20,38 @@ public class ExceptionController {
     public ResponseEntity<Map<String , String>> handleNoTokenProvidedException(){
         Map<String , String> map = new HashMap<>();
         map.put("ERROR" , "Invalided Token");
-        return new ResponseEntity<>( map , HttpStatus.FAILED_DEPENDENCY);
+        return new ResponseEntity<>( map , HttpStatus.NON_AUTHORITATIVE_INFORMATION);
 
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Map<String , String>> handleEntityNotFoundException(EntityNotFoundException e){
+        Map<String , String> map = new HashMap<>();
+        map.put("ERROR" , e.getMessage());
+        return new ResponseEntity<>( map , HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(WrongPasswordException.class)
+    public ResponseEntity<Map<String , String>> handleWrongPasswordException(){
+        Map<String , String> map = new HashMap<>();
+        map.put("ERROR" , "Wrong Password");
+        return new ResponseEntity<>( map , HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(org.springframework.web.HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<Map<String, String>> handleHttpMediaTypeNotSupportedException() {
+        Map<String, String> map = new HashMap<>();
+        map.put("ERROR", "Unsupported Media Type");
+        return new ResponseEntity<>(map, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, String>> handleException(Exception e) {
+        Map<String, String> map = new HashMap<>();
+        map.put("ERROR", e.getMessage());
+        return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
 }

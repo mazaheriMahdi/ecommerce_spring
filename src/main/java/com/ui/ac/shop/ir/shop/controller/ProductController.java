@@ -41,10 +41,11 @@ public class ProductController {
     }
 
     @GetMapping(value = "")
-    public ResponseEntity<PagedModel<FullProduct>> getProduct(Pageable pageable) {
-
-
-        Page<Product> products = productService.getPagedProduct(pageable);
+    public ResponseEntity<PagedModel<FullProduct>> getProduct(Pageable pageable, @RequestParam(required = false , name = "search") String name) {
+        Page<Product> products;
+        if (name != null) {
+            products = productService.searchProduct(name, pageable);
+        } else products = productService.getPagedProduct(pageable);
 
         PagedModel<FullProduct> pagedModel = pagedResourcesAssembler
                 .toModel(products, ProductModelAssembler);

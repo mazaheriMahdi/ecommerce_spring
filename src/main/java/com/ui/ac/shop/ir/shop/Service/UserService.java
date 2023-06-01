@@ -4,6 +4,7 @@ package com.ui.ac.shop.ir.shop.Service;
 import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
 import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
 import com.ui.ac.shop.ir.shop.Exception.TakenEmailException;
+import com.ui.ac.shop.ir.shop.Exception.WrongPasswordException;
 import com.ui.ac.shop.ir.shop.Repository.CustomerRepository;
 import com.ui.ac.shop.ir.shop.Repository.UserRepository;
 import com.ui.ac.shop.ir.shop.model.User.User;
@@ -31,10 +32,14 @@ public class UserService {
 
 
 
-    public User getUserByEmail(String email){
+    public User getUserByEmail(String email,  String password){
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()){
-            return user.get();
+            if (user.get().getPassword().equals(password)){
+                return user.get();
+
+            }
+            throw new WrongPasswordException();
         }throw new EntityNotFoundException("User","email" , email );
     }
 

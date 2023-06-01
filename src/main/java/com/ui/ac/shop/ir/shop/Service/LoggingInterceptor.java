@@ -28,13 +28,22 @@ public class LoggingInterceptor implements HandlerInterceptor {
     }
 
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authHeader == null) {
-            throw new NoTokenProvidedException();
-        }else {
+
+//            if(!(request.getRequestURI().contains("/auth") || request.getRequestURI().startsWith("/product"))){
+//                throw new NoTokenProvidedException();
+//            }
+
+            if (!request.getRequestURI().contains("/auth") && !request.getRequestURI().equals("/product")) {
+
+                throw new NoTokenProvidedException();
+            }
+
+
+        } else {
             Optional<User> user = userRepository.findByUuid(UUID.fromString(authHeader));
             user.ifPresent(value -> {
                 request.setAttribute("user", value);
