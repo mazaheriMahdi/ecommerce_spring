@@ -1,5 +1,6 @@
 package com.ui.ac.shop.ir.shop.model.Payment;
 
+import com.ui.ac.shop.ir.shop.model.Application;
 import com.ui.ac.shop.ir.shop.model.Enums.Status;
 import com.ui.ac.shop.ir.shop.model.User.Customer;
 import jakarta.persistence.*;
@@ -31,13 +32,14 @@ public class Payment {
     @ManyToOne
     private Customer customer;
 
-    @Enumerated(EnumType.ORDINAL)
-    private Status status = Status.PENDING;
+    @OneToOne
+    private Application application;
 
-    public Payment(String cardNumber, String cvv2, double amount, Customer customer) {
+    public Payment(String cardNumber, String cvv2, double amount, Customer customer, Application application) {
         this.cardNumber = cardNumber;
         this.cvv2 = cvv2;
         this.amount = amount;
         this.customer = customer;
+        this.application = application;
     }
 }
