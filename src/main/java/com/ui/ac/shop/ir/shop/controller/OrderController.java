@@ -3,6 +3,7 @@ package com.ui.ac.shop.ir.shop.controller;
 
 import com.ui.ac.shop.ir.shop.Service.OrderService;
 import com.ui.ac.shop.ir.shop.Service.UserService;
+import com.ui.ac.shop.ir.shop.model.Order.Order;
 import com.ui.ac.shop.ir.shop.model.User.Customer;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderItemResponseModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderResponseModel;
@@ -31,7 +32,13 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<List<OrderResponseModel>> getAllCustomerOrder(@RequestAttribute Customer customer
     ) {
+
         return new ResponseEntity<>(orderService.getAllCustomerOrderResponseModel(customer.getId()), HttpStatus.OK);
+    }
+
+    @GetMapping("/accepted")
+    public ResponseEntity<List<OrderResponseModel>> getAllAcceptedOrders(@RequestAttribute(name = "customer") Customer customer){
+        return new ResponseEntity<>(orderService.getAllAcceptedOrders(customer), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

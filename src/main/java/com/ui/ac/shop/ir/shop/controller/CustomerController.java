@@ -26,7 +26,7 @@ public class CustomerController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<GetProfileResponseModel> getProfile(@RequestAttribute("customer") Customer customer) {
         GetProfileResponseModel profileResponseModel = new GetProfileResponseModel(
                 customer.getUser().getName(),
@@ -38,7 +38,7 @@ public class CustomerController {
         return new ResponseEntity<>(profileResponseModel, HttpStatus.OK);
     }
 
-    @PatchMapping
+    @PutMapping()
     public ResponseEntity<MessageResponseModel> updateProfile(
             @RequestBody CustomerPatchRequestModel requestModel,
             @RequestAttribute("customer") Customer customer,

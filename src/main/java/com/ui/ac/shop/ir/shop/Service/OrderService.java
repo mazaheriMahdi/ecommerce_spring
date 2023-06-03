@@ -12,10 +12,10 @@ import com.ui.ac.shop.ir.shop.model.Product.Product;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderItemResponseModel;
 import com.ui.ac.shop.ir.shop.model.ResponseModels.OrderResponseModel;
 import com.ui.ac.shop.ir.shop.model.User.Customer;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.InsufficientResourcesException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +29,7 @@ public class OrderService {
     OrderItemRepository orderItemRepository;
     CustomerRepository customerRepository;
     ProductRepository productRepository;
+
     @Autowired
     public OrderService(OrderRepository orderRepository, CartItemRepository cartItemRepository, CartRepository cartRepository, OrderItemRepository orderItemRepository, CustomerRepository customerRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
@@ -48,6 +49,8 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+
+    @Transactional
     public void createOrder(UUID cartId, Customer customer) {
         Optional<Cart> cart = cartRepository.findById(cartId);
 
@@ -64,27 +67,30 @@ public class OrderService {
                 Order order = new Order(cart.get().getCustomer());
                 order.setOrderStatus(OrderStatus.PENDING);
 
-                double totalPrice = 0 ;
+                double totalPrice = 0;
                 // Create order items
                 for (CartItem cartItem : cartItems.get()) {
-                    Product product = new Product();
-                    if (product.getCount() < cartItem.getQuantity())throw new LackOfInventory();
+                    Product product = cartItem.getProduct();
+                    if (product.getCount() < cartItem.getQuantity()) throw new LackOfInventory();
                     product.setCount(product.getCount() - cartItem.getQuantity());
                     productRepository.save(product);
 
-                    OrderItem orderItem = new OrderItem(order, cartItem.getProduct(), cartItem.getQuantity());
+                    OrderItem orderItem = new OrderItem(order, cartItem.getProduct(), cartItem.getQuantity(), cartItem.getTotalPrice());
                     orderItemRepository.save(orderItem);
                     totalPrice += orderItem.getTotalPrice();
                 }
                 // Delete cart items
                 cartItemRepository.deleteAll(cartItems.get());
 //                cartRepository.delete(cart.get());
-                if (totalPrice >  customer.getCredit()) {
+                if (totalPrice > customer.getCredit()) {
                     order.setOrderStatus(OrderStatus.FAILED);
                     orderRepository.save(order);
                     throw new NotEnoughCreditException();
-                };
+                }
+                ;
                 customer.setCredit(customer.getCredit() - totalPrice);
+                customerRepository.save(customer);
+
                 order.setOrderStatus(OrderStatus.SUCCESS);
                 orderRepository.save(order);
                 // If cart items is not present
@@ -127,6 +133,17 @@ public class OrderService {
     public List<OrderResponseModel> getAllCustomerOrderResponseModel(Long id) {
         Optional<List<Order>> orders = orderRepository.findAllByCustomerId(id);
         //check if order is exist for given customer
+        return convertToOrderResponseModel(orders);
+    }
+
+    public List<OrderResponseModel> getAllAcceptedOrders(Customer customer) {
+        Optional<List<Order>> orders = orderRepository.findAllByOrderStatus(OrderStatus.SUCCESS);
+        //check if order is exist for given customer
+        return convertToOrderResponseModel(orders);
+
+    }
+
+    private List<OrderResponseModel> convertToOrderResponseModel(Optional<List<Order>> orders) {
         if (orders.isPresent()) {
             List<OrderResponseModel> orderResponseModels = new ArrayList<>();
 
@@ -154,12 +171,11 @@ public class OrderService {
                         order.getPlacedAt(),
                         orderItemResponseModels,
                         totalPrice
-                        ));
+                ));
 
             }
             return orderResponseModels;
         }
         throw new NoOrderForGivenCustomer();
     }
-
 }

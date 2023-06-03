@@ -7,7 +7,6 @@ import lombok.Value;
 @AllArgsConstructor
 @Value
 public class CustomerPatchRequestModel {
-    Long id;
     String firstName;
 
     String email;

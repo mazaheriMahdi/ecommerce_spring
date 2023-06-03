@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -52,6 +53,19 @@ public class CartController {
         throw new CartIdNotProvidedException();
     }
 
+
+    @GetMapping("/{id}/items/count")
+    public ResponseEntity<Map<String , Integer>> getCartItemCount(@PathVariable UUID id , @RequestAttribute("user") User user) {
+        Customer customer = customerService.getCustomerByUserID(user.getId());
+        Cart cart = cartService.getCustomerCart(customer.getId());
+        if (cart.getId().equals(id)) {
+            return ResponseEntity.ok(Map.of("count" , cartService.getCartItemCount(cart)));
+        } else {
+            throw new InvalidCartIdException();
+        }
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<CartResponseModel> getCartItems(@PathVariable UUID id , @RequestAttribute("user") User user) {
         Customer customer = customerService.getCustomerByUserID(user.getId());
@@ -63,11 +77,11 @@ public class CartController {
             throw new InvalidCartIdException();
         }
     }
-    @DeleteMapping("/{id}/items/{cartId}/{productId}")
-    public ResponseEntity<MessageResponseModel> deleteCartItem(@PathVariable UUID id , @PathVariable UUID cartId, @RequestAttribute("customer") Customer customer , @RequestAttribute("user") User user, @PathVariable Long productId){
+    @DeleteMapping("/{id}/items/{productId}")
+    public ResponseEntity<MessageResponseModel> deleteCartItem(@PathVariable UUID id ,@RequestAttribute("customer") Customer customer , @RequestAttribute("user") User user, @PathVariable Long productId){
         Cart cart = cartService.getCustomerCart(customer.getId());
         if (cart.getId().equals(id)) {
-            cartItemService.deleteCartItem(cartId, productId);
+            cartItemService.deleteCartItem(id, productId);
             return ResponseEntity.ok(new MessageResponseModel("cart item deleted successfully"));
         } else {
             throw new InvalidCartIdException();

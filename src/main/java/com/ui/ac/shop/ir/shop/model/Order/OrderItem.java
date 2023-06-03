@@ -41,4 +41,11 @@ public class OrderItem {
         this.product = product;
         this.quantity = quantity;
     }
+
+    public OrderItem(Order order, Product product, int quantity, double totalPrice) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+    }
 }

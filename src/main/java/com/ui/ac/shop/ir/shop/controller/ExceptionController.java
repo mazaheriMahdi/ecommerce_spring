@@ -1,10 +1,7 @@
 package com.ui.ac.shop.ir.shop.controller;
 
 
-import com.ui.ac.shop.ir.shop.Exception.EntityNotFoundException;
-import com.ui.ac.shop.ir.shop.Exception.InvalidTokenException;
-import com.ui.ac.shop.ir.shop.Exception.NoTokenProvidedException;
-import com.ui.ac.shop.ir.shop.Exception.WrongPasswordException;
+import com.ui.ac.shop.ir.shop.Exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -51,6 +48,19 @@ public class ExceptionController {
         Map<String, String> map = new HashMap<>();
         map.put("ERROR", e.getMessage());
         return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(LackOfInventory.class)
+    public ResponseEntity<Map<String, String>> handleLackOfInventory() {
+        Map<String, String> map = new HashMap<>();
+        map.put("ERROR", "Lack Of Inventory");
+        return new ResponseEntity<>(map, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(NotEnoughCreditException.class)
+    public ResponseEntity<Map<String, String>> handleNotEnoughCreditException() {
+        Map<String, String> map = new HashMap<>();
+        map.put("ERROR", "Not Enough Credit");
+        return new ResponseEntity<>(map, HttpStatus.FORBIDDEN);
     }
 
 
