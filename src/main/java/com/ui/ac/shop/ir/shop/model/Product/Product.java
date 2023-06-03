@@ -19,7 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Nullable
+
     private String image;
     private String name;
     private int count;
@@ -34,22 +34,23 @@ public class Product {
     private Category category;
 
 
-    public Product(Long id, String name, int count, int price, double averagePoint, Category category) {
+    public Product(Long id, String name, int count, int price, double averagePoint, Category category , String image) {
         this.id = id;
         this.name = name;
         this.count = count;
         this.price = price;
         this.averagePoint = averagePoint;
-
         this.category = category;
+        this.image = image;
     }
 
-    public Product(String name, int count, int price, double averagePoint, Category category) {
+    public Product(String name, int count, int price, double averagePoint, Category category , String image) {
         this.name = name;
         this.count = count;
         this.price = price;
         this.averagePoint = averagePoint;
         this.category = category;
+        this.image = image;
     }
 
 
