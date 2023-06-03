@@ -3,6 +3,7 @@ package com.ui.ac.shop.ir.shop.controller;
 
 import com.ui.ac.shop.ir.shop.Service.ApplicationService;
 import com.ui.ac.shop.ir.shop.model.Application;
+import com.ui.ac.shop.ir.shop.model.ResponseModels.ApplicationResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class ApplicationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Application>> getAllApplications(){
+    public ResponseEntity<List<ApplicationResponseModel>> getAllApplications(){
         return new ResponseEntity<>(applicationService.getALlApplications() , HttpStatus.OK);
     }
     @GetMapping("/{applicationId}")
