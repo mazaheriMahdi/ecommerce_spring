@@ -33,10 +33,12 @@ public class CustomerService {
     public void updateCustomer(Customer customer) {
         customerRepository.save(customer);
     }
-    public void createCustomer(Long userId) {
+    public void createCustomer(Long userId , String image_url) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
-            customerRepository.save(new Customer(user.get()));
+            Customer customer = new Customer(user.get());
+            customer.setAvatarUrl(image_url);
+            customerRepository.save(customer);
         }else throw new EntityNotFoundException("User", userId);
     }
 

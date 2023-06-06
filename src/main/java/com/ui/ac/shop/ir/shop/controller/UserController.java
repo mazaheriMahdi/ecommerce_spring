@@ -1,6 +1,7 @@
 package com.ui.ac.shop.ir.shop.controller;
 
 
+import com.ui.ac.shop.ir.shop.Exception.AccessDeniedException;
 import com.ui.ac.shop.ir.shop.Service.CustomerService;
 import com.ui.ac.shop.ir.shop.Service.UserService;
 import com.ui.ac.shop.ir.shop.model.RequestModels.LoginRequestModel;
@@ -10,10 +11,11 @@ import com.ui.ac.shop.ir.shop.model.User.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -33,15 +35,29 @@ public class UserController {
                 , signInRequestModel.getEmail()
                 , signInRequestModel.getPassword())
         );
-        customerService.createCustomer(user.getId());
+        customerService.createCustomer(user.getId() , signInRequestModel.getAvatar_url());
         return new ResponseEntity<>(new UserResponseModel(user.getUuid()), HttpStatus.OK);
     }
 
     @PostMapping(value = "/login")
     public ResponseEntity<UserResponseModel> login(@RequestBody LoginRequestModel loginRequestModel) {
-        User user = userService.getUserByEmail(loginRequestModel.getEmail() , loginRequestModel.getPassword());
+        User user = userService.getUserByEmailAndPass(loginRequestModel.getEmail(), loginRequestModel.getPassword());
         return new ResponseEntity<>(new UserResponseModel(user.getUuid()), HttpStatus.OK);
 
+    }
+
+    @PostMapping(value = "/isStaff")
+    public ResponseEntity<Map<String, Boolean>> isStaff(@RequestAttribute(name = "user") User user) {
+        Map<String , Boolean> response = new HashMap<>();
+        response.put("isStaff" , user.getIsStaff());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers(@RequestAttribute(name = "user") User user) {
+        if (user.getIsStaff()){
+            return new  ResponseEntity<List<User>>(userService.getAllUser(), HttpStatus.OK);
+        }throw new AccessDeniedException();
     }
 
 

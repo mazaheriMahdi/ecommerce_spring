@@ -1,7 +1,9 @@
 package com.ui.ac.shop.ir.shop.model.Order;
 
 
+import com.ui.ac.shop.ir.shop.model.Discount;
 import com.ui.ac.shop.ir.shop.model.Product.Product;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,10 +32,18 @@ public class OrderItem {
     private int quantity;
 
 
+    @Nullable
+    @ManyToOne
+    private Discount discount;
+
+
     @Transient
     private double totalPrice;
+
     public double getTotalPrice() {
-        return product.getPrice() * quantity;
+        if (discount == null)
+            return product.getPrice() * quantity;
+        return product.getPrice() * quantity * (((100 - discount.getPercent()) / 100D));
     }
 
     public OrderItem(Order order, Product product, int quantity) {

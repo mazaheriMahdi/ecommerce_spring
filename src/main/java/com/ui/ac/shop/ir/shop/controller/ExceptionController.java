@@ -63,5 +63,10 @@ public class ExceptionController {
         return new ResponseEntity<>(map, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String , String>> handleAccessDeniedException(){
+        return new ResponseEntity<>(Map.of("ERROR" , "Access Denied") , HttpStatus.FORBIDDEN);
+    }
+
 
 }

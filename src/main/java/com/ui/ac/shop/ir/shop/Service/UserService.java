@@ -28,45 +28,55 @@ public class UserService {
     }
 
 
-
-
-
-
-    public User getUserByEmail(String email,  String password){
+    public User getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
-        if (user.isPresent()){
-            if (user.get().getPassword().equals(password)){
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new EntityNotFoundException("User", "email", email);
+    }
+
+    public User getUserByEmailAndPass(String email, String password) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            if (user.get().getPassword().equals(password)) {
                 return user.get();
 
             }
             throw new WrongPasswordException();
-        }throw new EntityNotFoundException("User","email" , email );
+        }
+        throw new EntityNotFoundException("User", "email", email);
     }
 
-    public User getByToken(UUID token){
+    public User getByToken(UUID token) {
         Optional<User> user = userRepository.findByUuid(token);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             return user.get();
-        }throw new InvalidTokenException();
+        }
+        throw new InvalidTokenException();
     }
 
-    public Boolean checkUserExistence(UUID token){
+    public Boolean checkUserExistence(UUID token) {
         return userRepository.existsByUuid(token);
     }
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
-    public User addUser(User user){
-        if (userRepository.findByEmail(user.getEmail()).isEmpty()){
+
+    public User addUser(User user) {
+        if (userRepository.findByEmail(user.getEmail()).isEmpty()) {
             userRepository.save(user);
             return userRepository.findByEmail(user.getEmail()).get();
-        }else {
+        } else {
             throw new TakenEmailException(user.getEmail());
         }
     }
+    public List<User> getAllUser(){
+        return userRepository.findAll();
+    }
 
-    public void updateUser(User user){
+    public void updateUser(User user) {
         userRepository.save(user);
     }
 }

@@ -5,6 +5,7 @@ import com.ui.ac.shop.ir.shop.Exception.*;
 import com.ui.ac.shop.ir.shop.Repository.*;
 import com.ui.ac.shop.ir.shop.model.Cart.Cart;
 import com.ui.ac.shop.ir.shop.model.Cart.CartItem;
+import com.ui.ac.shop.ir.shop.model.Discount;
 import com.ui.ac.shop.ir.shop.model.Enums.OrderStatus;
 import com.ui.ac.shop.ir.shop.model.Order.Order;
 import com.ui.ac.shop.ir.shop.model.Order.OrderItem;
@@ -69,6 +70,7 @@ public class OrderService {
 
                 double totalPrice = 0;
                 // Create order items
+                Discount discount = null ;
                 for (CartItem cartItem : cartItems.get()) {
                     Product product = cartItem.getProduct();
                     if (product.getCount() < cartItem.getQuantity()) throw new LackOfInventory();
@@ -76,9 +78,18 @@ public class OrderService {
                     productRepository.save(product);
 
                     OrderItem orderItem = new OrderItem(order, cartItem.getProduct(), cartItem.getQuantity(), cartItem.getTotalPrice());
+
+                    // Check if discount is present
+                    if (cartItem.getDiscount() != null) {
+                        if (cartItem.getDiscount().getCount() == 0) throw new DiscountIsNotAvailableException();
+                        orderItem.setDiscount(cartItem.getDiscount());
+                        discount = cartItem.getDiscount();
+                    }
                     orderItemRepository.save(orderItem);
                     totalPrice += orderItem.getTotalPrice();
                 }
+                // Decrease discount count
+                if (discount != null) discount.setCount(discount.getCount()-1);
                 // Delete cart items
                 cartItemRepository.deleteAll(cartItems.get());
 //                cartRepository.delete(cart.get());
