@@ -1,7 +1,9 @@
 package com.ui.ac.shop.ir.shop.model.Cart;
 
 
+import com.ui.ac.shop.ir.shop.model.Discount;
 import com.ui.ac.shop.ir.shop.model.User.Customer;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +30,10 @@ public class Cart {
     @OneToOne(cascade = CascadeType.REMOVE)
     private Customer customer;
 
+
+    @Nullable
+    @ManyToOne
+    private Discount discount;
     public Cart(Customer customer) {
         this.customer = customer;
     }
