@@ -11,6 +11,7 @@ import java.util.List;
 @Value
 public class CartResponseModel {
     LocalDate placed_at;
+    String discount;
     List<CartItemResponseModel> cartItems;
 
 }
