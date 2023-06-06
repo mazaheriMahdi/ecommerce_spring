@@ -26,16 +26,22 @@ public class CartItemService {
         this.cartItemRepository = cartItemRepository;
     }
 
+
     public List<CartItemResponseModel> getCartItemsResponseModel(UUID cartId) {
-        Optional<List<CartItem>> cartItem = cartItemRepository.findCartItemsByCartId(cartId);
+        Optional<List<CartItem>> cartItem = getCartItemList(cartId);
         if (cartItem.isPresent()) {
             List<CartItemResponseModel> cartItemResponseModels = new ArrayList<>();
             for (CartItem ct : cartItem.get()) {
-                cartItemResponseModels.add(new CartItemResponseModel(ct.getProduct(), ct.getQuantity(), ct.getProduct().getPrice() * ct.getQuantity()));
+                cartItemResponseModels.add(new CartItemResponseModel(ct.getProduct(), ct.getQuantity(), ct.getTotalPrice()));
             }
             return cartItemResponseModels;
         }
         throw new CartIsEmptyException();
+    }
+
+    public Optional<List<CartItem>> getCartItemList(UUID cartId) {
+        Optional<List<CartItem>> cartItem = cartItemRepository.findCartItemsByCartId(cartId);
+        return cartItem;
     }
 
 
