@@ -1,7 +1,9 @@
 package com.ui.ac.shop.ir.shop.model.Cart;
 
 
+import com.ui.ac.shop.ir.shop.model.Discount;
 import com.ui.ac.shop.ir.shop.model.Product.Product;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,8 +32,15 @@ public class CartItem {
     @Transient
     private double totalPrice;
 
+
+    @Nullable
+    @ManyToOne
+    private Discount discount;
+
     public double getTotalPrice() {
-        return product.getPrice() * quantity;
+        if (discount == null)
+            return product.getPrice() * quantity;
+        return product.getPrice() * quantity * (((100 - discount.getPercent()) / 100D));
     }
 
     public CartItem(Product product, int quantity, Cart cart) {
