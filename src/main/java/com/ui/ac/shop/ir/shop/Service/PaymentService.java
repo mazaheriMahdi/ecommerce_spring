@@ -77,6 +77,7 @@ public class PaymentService {
                 customer,
                 application
         );
+        applicationRepository.save(application);
         paymentRepository.save(payment);
     }
 }

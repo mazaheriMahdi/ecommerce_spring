@@ -1,5 +1,6 @@
 package com.ui.ac.shop.ir.shop.Repository;
 
+import com.ui.ac.shop.ir.shop.model.Application;
 import com.ui.ac.shop.ir.shop.model.Payment.Payment;
 import com.ui.ac.shop.ir.shop.model.User.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ import java.util.Optional;
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
     Optional<Payment> findAllByCustomerId(Long customerId);
+    Optional<Payment> findAllByApplication(Application application);
 }

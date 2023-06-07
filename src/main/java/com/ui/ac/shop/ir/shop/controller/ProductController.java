@@ -36,9 +36,6 @@ public class ProductController {
         ProductModelAssembler = productModelAssembler;
     }
 
-    private FullProduct toFullPRoduct(Product product) {
-        return new FullProduct(product, productPropertyServices.getByProductId(product.getId()));
-    }
 
     @GetMapping(value = "")
     public ResponseEntity<PagedModel<FullProduct>> getProduct(Pageable pageable, @RequestParam(required = false , name = "search") String name) {
@@ -61,12 +58,6 @@ public class ProductController {
 
     }
 
-    @GetMapping(value = "test")
-    public ResponseEntity<AddProductRequest> getf(@RequestHeader(HttpHeaders.AUTHORIZATION) UUID token) {
-        AddProductRequest addProductRequest = new AddProductRequest(productService.getProducts().get(0), List.of(new ProductPropertiesResponse("CAR", "101")));
-        System.out.println(token);
-        return new ResponseEntity<>(addProductRequest, HttpStatus.OK);
-    }
 
 
     @PostMapping
